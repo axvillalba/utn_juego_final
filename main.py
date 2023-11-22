@@ -2,9 +2,8 @@ import pygame as pg
 import sys
 from auxiliar.constantes import *
 from models.stage import Stage
-from models.player import Player
-from constantes import *
 from auxiliar.auxiliar import *
+
 # from models.game import Game
 
 # if __name__ == '__main__':
@@ -13,8 +12,6 @@ from auxiliar.auxiliar import *
 
 screen = pg.display.set_mode((screen_w, screen_h))
 pg.init()
-
-
 clock = pg.time.Clock()
 
 
@@ -34,13 +31,10 @@ while juego_on == True:
                 sys.exit()
             case pg.KEYDOWN:
                 game.controlar()
-            
     
-
-    delta_ms = clock.tick(FPS)
     screen.blit(back_img, back_img.get_rect())
+    delta_ms = clock.tick(FPS)
     game.run(delta_ms)
-
     
     
     pg.display.update()

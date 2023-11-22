@@ -2,6 +2,7 @@ import json
 
 screen_w = 600
 screen_h = 600
+FPS = 60
 CONFIG_FILE_PATH = './configs/config.json'
 
 

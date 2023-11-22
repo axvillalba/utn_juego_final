@@ -6,25 +6,27 @@
         },
 
         "enemy": {
-            "enemy_img": "./assets/graphics/timca.png",
-            "max_enemy_speed": 7,
-            "min_enemy_speed": 5,
+            "enemy_img": "./assets/graphics/Enemy/solo_timca.png",
+            "max_enemy_speed": 2,
+            "min_enemy_speed": 1,
             "percentaje_shoot": 1
         },
         
         "player": {
-            "player_img": "./assets/graphics/player_allen/player.png"
+            "player_stand":"./assets/graphics/player_allen/player.png",
+            "player_walk": "./assets/graphics/player_allen/run.png",
+            "player_shoot":"./assets/graphics/player_allen/shoot.png"
         },
         "stage": {
             "max_amount_enemies": 5,
             "coords_enemies": [
                 {
-                    "coord_x": 50,
-                    "coord_y": 50
+                    "coord_x": 20,
+                    "coord_y": 270
                 },
                 {
-                    "coord_x": 250,
-                    "coord_y": 100
+                    "coord_x": 565,
+                    "coord_y": 335
                 },
                 {
                     "coord_x": 100,

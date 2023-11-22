@@ -5,12 +5,13 @@ from models.Bullet import Bullet
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, pos, constraint_x, constraint_y, stage_dict_configs: dict):
         super().__init__()
-
+        #Abrimos el archivo json y lo convertimos en diccionario 
         self.__enemy_configs = stage_dict_configs.get('enemy')
-        #self.__percentaje_shoot = self.__enemy_configs["percentaje_shoot"]
+        self.__percentaje_shoot = self.__enemy_configs["percentaje_shoot"]
 
-        # Mostrar sprite del jugador
+        #Mostrar sprite del jugador
         self.image = pygame.image.load(self.__enemy_configs["enemy_img"]).convert_alpha()
+        #En este caso lo que hago es darle el rectangulo al sprite de la linea anterior. ahora self.rect tendrá los metodos de rectangulos. 
         self.rect = self.image.get_rect(midbottom=pos)
 
         # Atributos de movimiento
@@ -26,37 +27,34 @@ class Enemy(pygame.sprite.Sprite):
     def constraint(self):  # Ajusta al jugador a los limites de la pantalla
         if self.move_right:
             if (self.rect.right + self.speed ) < self.max_x_constraint:
-                #self.rect.left += self.speed
                 self.rect.x += self.speed
             else:
                 if self.rect.bottom + self.speed * 2 < self.max_y_constraint:
-                    #self.rect.bottom += self.speed
                     self.rect.y += self.speed * 2
                 self.move_right = False
         else:
             if self.rect.left - self.speed > 0:
-                #self.rect.right -= self.speed
                 self.rect.x -= self.speed
             else:
                 if (self.rect.bottom + self.speed * 2) < self.max_y_constraint:
-                    #self.rect.bottom += self.speed
                     self.rect.y += self.speed * 2
                 self.move_right = True
-        
+    
+    #Seteo una velocidad aleatoria a los enemigos
     def __setear_velocidad(self):
         self.speed = rd.randint(self.__enemy_configs["min_enemy_speed"], self.__enemy_configs["max_enemy_speed"])
 
-    # def create_bullet(self):
-    #     return Bullet(self.rect.centerx, self.rect.bottom, 'down')
+    def create_bullet(self):
+        return Bullet(self.rect.centerx, self.rect.bottom, 'down')
 
-    # def shoot_laser(self):  # disparar laser
-    #     self.bullet_group.add(self.create_bullet())
+    def shoot_laser(self):  # disparar laser
+        self.bullet_group.add(self.create_bullet())
     
-    # def can_shoot(self) -> bool:
-    #     return rd.random() * 500 <= self.__percentaje_shoot
+    def can_shoot(self) -> bool:
+        return rd.random() * 500 <= self.__percentaje_shoot
     
-    # def is_shooting(self) -> bool:
-        # return self.can_shoot()
+    def is_shooting(self) -> bool:
+        return self.can_shoot()
 
     def do_movement(self, delta_ms):
         self.time_move += delta_ms
@@ -70,7 +68,7 @@ class Enemy(pygame.sprite.Sprite):
         self.draw(screen)
         self.bullet_group.draw(screen)
         self.bullet_group.update()
-        #self.constraint()
+        self.constraint()
     
     def draw(self, screen: pygame.surface.Surface):
         screen.blit(self.image, self.rect)
