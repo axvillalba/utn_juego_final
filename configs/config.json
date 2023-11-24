@@ -19,6 +19,7 @@
         },
         "stage": {
             "max_amount_enemies": 5,
+            "max_amount_plataform": 17,
             "coords_enemies": [
                 {
                     "coord_x": 20,
@@ -32,7 +33,79 @@
                     "coord_x": 100,
                     "coord_y": 150
                 }
-            ]
+            ],
+
+            "coord_plataformas": [
+                    {   
+                        "coord_x":157,
+                        "coord_y":230
+                    },
+                    {
+                        "coord_x":250,
+                        "coord_y":230
+                    },
+                    {   
+                        "coord_x":345,
+                        "coord_y":230
+                    },
+                    {   
+                        "coord_x":441,
+                        "coord_y":230
+                    },
+                    {
+                        "coord_x":60,
+                        "coord_y":298
+                    },
+                    {   
+                        "coord_x":538,
+                        "coord_y":298
+                    },                    
+                    {
+                        "coord_x":60,
+                        "coord_y":366
+                    },
+                    {
+                        "coord_x":156,
+                        "coord_y":366
+                    },
+                    {   
+                        "coord_x":443,
+                        "coord_y":366
+                    },
+                    {
+                        "coord_x":538,
+                        "coord_y":366
+                    },
+                    {
+                        "coord_x":60,
+                        "coord_y":436
+                    },
+                    {
+                        "coord_x":538,
+                        "coord_y":436
+                    },
+                    {
+                        "coord_x":443,
+                        "coord_y":470
+                    },
+                    {
+                        "coord_x":156,
+                        "coord_y":470
+                    },
+                    {
+                        "coord_x":254,
+                        "coord_y":504
+                    },
+                    {
+                        "coord_x":347,
+                        "coord_y":504
+                    }
+        ]
+
+        },
+        "plataforma": {
+            "plataforma_img" :"./assets/graphics/plataforma_stage1.png"
+
         }
     },
 

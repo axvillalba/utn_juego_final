@@ -4,11 +4,6 @@ from auxiliar.constantes import *
 from models.stage import Stage
 from auxiliar.auxiliar import *
 
-# from models.game import Game
-
-# if __name__ == '__main__':
-    
-#     Game.run_stage('stage_2')
 
 screen = pg.display.set_mode((screen_w, screen_h))
 pg.init()
@@ -22,7 +17,7 @@ juego_on = True
 game = Stage(screen, screen_w, screen_h, 'stage_1') 
 
 while juego_on == True:
-    
+
     lista_eventos = pg.event.get()
     for evento in lista_eventos:
         match evento.type:
