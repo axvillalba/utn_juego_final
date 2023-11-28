@@ -19,13 +19,15 @@ class Player(pygame.sprite.Sprite):
         
         
         self.__iddle_r = sf.get_surface_from_spritesheet('./assets/graphics/player_allen/stand.png',4,1)
-        self.__iddle_l = sf.get_surface_from_spritesheet('./assets/graphics/player_allen/stand.png',4,1,True)        
+        self.__iddle_l = sf.get_surface_from_spritesheet('./assets/graphics/player_allen/stand.png',4,1, flip=True)        
         self.__walk_r = sf.get_surface_from_spritesheet('./assets/graphics/player_allen/run.png', 8,1)
         self.__walk_l = sf.get_surface_from_spritesheet('./assets/graphics/player_allen/run.png', 8,1, flip=True)
         # self.__attack_melee_r = sf.get_surface_from_spritesheet('./assets/graphics/player_allen/attack_melee.png',7,1)
         # self.__attack_melee_l = sf.get_surface_from_spritesheet('./assets/graphics/player_allen/attack_melee.png',7,1, flip=True)
         self.__attack_laser_r = sf.get_surface_from_spritesheet('./assets/graphics/player_allen/attack_3.png',4,1)
         self.__attack_laser_l = sf.get_surface_from_spritesheet('./assets/graphics/player_allen/attack_3.png',4,1, flip = True)
+        self.__jump_r = sf.get_surface_from_spritesheet('./assets/graphics/player_allen/player_jump.png',8,1)
+        self.__jump_l = sf.get_surface_from_spritesheet('./assets/graphics/player_allen/player_jump.png',8,1, flip = True)
         
         
         #self.__image_shot = sf.get_surface_from_spritesheet('./assets\graphics\player_allen\power_attack.png',8,1)
@@ -39,11 +41,11 @@ class Player(pygame.sprite.Sprite):
         self.__rect = self.__actual_img_animation.get_rect(midbottom=(coord_x, coord_y))
         
         # Atributos de movimiento / speed=movimientos de pixeles que se mueve el personaje (recibe el valor por parametro) / constrait = restriccion de mov en el eje x
-        self.speed = speed 
+        self.__speed = speed 
         self.max_x_constraint = constraint
-        self.jump = jump
+        self.__jump = jump
         self.gravity = gravity
-
+        
         #Booleanos de movimientos
         self.__is_jumping = False
         self.__is_looking_right = True
@@ -67,36 +69,32 @@ class Player(pygame.sprite.Sprite):
     def __set_x_animations_preset(self,animation_list: list[pygame.surface.Surface], look_r: bool):
         self.__actual_animation = animation_list
         self.__is_looking_right = look_r
-        
-    
-    # def __set_y_animations_preset(self):
-    #     self.__move_y = -self.__jump
-    #     self.__move_x = self.__speed_run if self.__is_looking_right else -self.__speed_run
-    #     self.__actual_animation = self.__jump_r if self.__is_looking_right else self.__jump_l
-    #     self.__initial_frame = 0
-    #     self.__is_jumping = True
-        
+
     def get_actividad(self):
         #Esta funcion va a determinar los movimientos del Player 
         keys = pygame.key.get_pressed()
 
         if keys[pygame.K_RIGHT]:  # movimiento sobre eje x
-            self.__rect.x += self.speed
+            self.__rect.x += self.__speed
             self.__is_looking_right = True
             self.__set_x_animations_preset(self.__walk_r, self.__is_looking_right)
         elif keys[pygame.K_LEFT]:
-            self.__rect.x -= self.speed 
+            self.__rect.x -= self.__speed 
             self.__is_looking_right = False
             self.__set_x_animations_preset(self.__walk_l, self.__is_looking_right)
         elif keys [pygame.K_DOWN]: #Solo va a quedar ahora para probar movimientos
-            self.__rect.y += 2
+            self.__rect.y += 5
         elif keys[pygame.K_SPACE] and not self.__is_jumping:
             self.saltar()
+            #self.stay()
+                
+            
         elif keys [pygame.K_j] and not self.is_shooting:
             if self.__is_looking_right == True:
                 self.__set_x_animations_preset(self.__attack_laser_r,self.__is_looking_right)
                 self.disparar()
             elif self.__is_looking_right == False:
+                
                 self.__set_x_animations_preset(self.__attack_laser_l, self.__is_looking_right)
                 self.disparar()
         else:
@@ -109,9 +107,11 @@ class Player(pygame.sprite.Sprite):
         return self.bullet_group
         
     def disparar(self):
-        if not self.is_shooting:
+        
+        if self.ready:
             self.shoot_laser()
-            self.is_shooting = False
+            self.ready = False
+            self.laser_time = pygame.time.get_ticks()
             
     def create_bullet(self):
         if self.__is_looking_right == True:
@@ -122,27 +122,51 @@ class Player(pygame.sprite.Sprite):
 
     def shoot_laser(self):  # disparar laser
         self.bullet_group.add(self.create_bullet())
+    
+    def recharge (self):
+        if not self.ready:
+            current_time = pygame.time.get_ticks()
+            if current_time - self.laser_time >= self.laser_cooldown:
+                self.ready = True
+        
+        
+        
 
     
     def saltar(self):
+        
+        if self.__is_looking_right == True:
+            self.__actual_animation = self.__jump_r 
+            self.__rect.y -= self.__jump        
+            self.__rect.y += self.gravity
+            self.__rect.x += self.__speed - 2
+            
+        else:
+            self.__actual_animation = self.__jump_l
+            self.__rect.y -= self.__jump        
+            self.__rect.y += self.gravity
+            self.__rect.x -= self.__speed -2
 
-        #self.is_jumping = True
-        self.__rect.y -= self.jump        
-        self.__rect.y += self.gravity
+
     # Actualizar la posición del personaje
         self.coord_x += self.__rect.x
         self.coord_y += self.__rect.y
     # Ver si el personaje salto de más
-        if self.coord_y <= (self.__rect.y - self.jump):
-            self.__rect.y += self.jump
-
+        if self.coord_y <= (self.__rect.y - self.__jump):
+            self.__rect.y += self.__jump
         self.__is_jumping = False
+
         
         
     def stay(self):
-        if self.__actual_animation != self.__iddle_l and self.__actual_animation != self.__iddle_r:
-            self.__actual_animation = self.__iddle_r if self.__is_looking_right else self.__iddle_l
-            self.__actual_frame_index = 0
+        if self.__is_looking_right == True:
+            self.__actual_animation = self.__iddle_r
+        else:
+            self.__actual_animation = self.__iddle_l
+        self.__actual_frame_index = 0
+        
+
+    
 
     def constraint(self):  # Ajusta al jugador a los limites de la pantalla
         if self.__rect.left<= 12:
@@ -172,6 +196,7 @@ class Player(pygame.sprite.Sprite):
         self.do_animation(delta_ms)    
         self.get_actividad()
         self.constraint()
+        self.recharge()
         self.bullet_group.draw(screen)
         self.bullet_group.update()
 

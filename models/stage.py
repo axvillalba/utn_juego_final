@@ -13,7 +13,7 @@ class Stage:
         self.__plataforma = pygame.sprite.Group()
         
         # Creo al jugador en la variable player_sprite
-        self.__player_sprite = Player(limit_w / 2, 445, limit_h-12, frame_rate = 120, speed=5, gravity = 5, jump = 10,  stage_dict_configs=self.__configs)  # posicion inicial      
+        self.__player_sprite = Player(limit_w / 2, 445, limit_h-12, frame_rate = 120, speed=5, gravity = 6, jump = 10,  stage_dict_configs=self.__configs)  # posicion inicial      
         #En self.player voy almacenar y manipular los sprites de player que voy a generar en la linea anterior
         self.__player = pygame.sprite.Group(self.__player_sprite)
         #Creo la variable en donde voy a guardar los sprites de Enemy que se crearan en esta clase
@@ -44,6 +44,7 @@ class Stage:
         self.spawnear_enemigos()
         for enemy in self.__enemies_class:
             self.__enemies.add(enemy)
+            
             
         self.__player_win = True
 
@@ -99,6 +100,11 @@ class Stage:
             if len(self.__enemies) == 0 and not self.__player_win:
                 self.__player_win = True
                 print(f'Ganaste la partida con: {self.__player_sprite.puntaje} Puntos!')
+                
+    # def colision_de_enemigo(self):
+    #     enemigos = self.__enemies_class
+    #     for enemigo in enemigos:
+    #         if enemigo.__rec
                 
     # def colision_plataforma(self):
     # # En el bucle principal del juego
