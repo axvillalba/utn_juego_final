@@ -9,11 +9,19 @@ class Stage:
 
         # Abro el json con todos los datos correspondientes al stage que desee
         self.__configs = open_configs().get(stage_name)
+        
+        #Aca deberia de colocar el background y datos que corresponda segun el nivel
+        
+        
+        
         #Creo las plataformas del stage
+        
+        
+        
         self.__plataforma = pygame.sprite.Group()
         
         # Creo al jugador en la variable player_sprite
-        self.__player_sprite = Player(limit_w / 2, 445, limit_h-12, frame_rate = 120, speed=5, gravity = 6, jump = 10,  stage_dict_configs=self.__configs)  # posicion inicial      
+        self.__player_sprite = Player(limit_w / 2, 155, limit_h-12, frame_rate = 120, speed=5, gravity = 6, jump = 10,  stage_dict_configs=self.__configs)  # posicion inicial      
         #En self.player voy almacenar y manipular los sprites de player que voy a generar en la linea anterior
         self.__player = pygame.sprite.Group(self.__player_sprite)
         #Creo la variable en donde voy a guardar los sprites de Enemy que se crearan en esta clase
@@ -101,30 +109,19 @@ class Stage:
                 self.__player_win = True
                 print(f'Ganaste la partida con: {self.__player_sprite.puntaje} Puntos!')
                 
-    # def colision_de_enemigo(self):
-    #     enemigos = self.__enemies_class
-    #     for enemigo in enemigos:
-    #         if enemigo.__rec
-                
-    # def colision_plataforma(self):
-    # # En el bucle principal del juego
-    #     for platform in platforms:
-    #         if player.rect.colliderect(platform.rect):
-    # # Detener el movimiento del jugador
-    #     player.vel_y = 0
-    #     player.rect.bottom = platform.rect.top
+
+            
 
     def run(self, delta_ms):
         # Actualizar todos los grupos de sprites
         # Dibujar todos los grupos de sprites
         # Actualizar y Dibujar Jugador        
-        self.__player.update(self.__main_screen, delta_ms)
+        
+        self.__plataforma.update(self.__main_screen)
+        self.__player.update(self.__main_screen, delta_ms,self.__plataforma_class)
         self.__player_sprite.draw(self.__main_screen)        
         
         self.__enemies.update(delta_ms, self.__main_screen)
-        
-        self.__plataforma.update(self.__main_screen)
-        self.__plataforma.draw(self.__main_screen)
         
         self.colisionar_contra_enemigos()
         #self.enemies.draw(self.__main_screen)

@@ -2,7 +2,8 @@
     "stage_1": {
         
         "background": {
-            "bg_img" : "./assets/graphics/stage1_background.png"
+            "bg_img" : "./assets/graphics/stage1_background.png",
+            "fondo_datos":"./assets/graphics/interfaz/Banner04.png"
         },
 
         "enemy": {
@@ -15,7 +16,8 @@
         "player": {
             "player_stand":"./assets/graphics/player_allen/player.png",
             "player_walk": "./assets/graphics/player_allen/run.png",
-            "player_shoot":"./assets/graphics/player_allen/shoot.png"
+            "player_shoot":"./assets/graphics/player_allen/shoot.png",
+            "life_points": 100
         },
         "stage": {
             "max_amount_enemies": 5,
