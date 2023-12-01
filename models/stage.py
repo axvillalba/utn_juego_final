@@ -13,11 +13,7 @@ class Stage:
         #Aca deberia de colocar el background y datos que corresponda segun el nivel
         
         
-        
         #Creo las plataformas del stage
-        
-        
-        
         self.__plataforma = pygame.sprite.Group()
         
         # Creo al jugador en la variable player_sprite
@@ -33,7 +29,6 @@ class Stage:
         self.__coordenadas_enemigos = self.__stage_configs.get("coords_enemies")
         self.__max_plataform = self.__stage_configs["max_amount_plataform"]
         self.__coords_plataform = self.__stage_configs[ "coord_plataformas"]
-
         
         #Variables sobre el tamaño de pantalla y el surface para la creacion del mismo
         self.__limit_w = limit_w
@@ -45,14 +40,12 @@ class Stage:
         self.create_plataforma()
         for plataform in self.__plataforma_class:
             self.__plataforma.add(plataform)
-        
 
-        #Creacion de la lista de enemigos y creacion de enemigos qe leugo los ire agregando a self.enemies (de más arriba)
+        #Creacion de la lista de enemigos y creacion de enemigos qe luego los ire agregando a self.enemies (de más arriba)
         self.__enemies_class = []
         self.spawnear_enemigos()
         for enemy in self.__enemies_class:
             self.__enemies.add(enemy)
-            
             
         self.__player_win = True
 
@@ -76,8 +69,6 @@ class Stage:
                 )
         
         
-        
-
     def spawnear_enemigos(self):  #Funcion que crea a los enemigos y los guarda en la lista de enemies.class
         #Debo determinar cantidades para saber cual for agarrar para realizar la iteracion correspondiente
         if self.__max_enemies > len(self.__coordenadas_enemigos): 
@@ -109,7 +100,14 @@ class Stage:
                 self.__player_win = True
                 print(f'Ganaste la partida con: {self.__player_sprite.puntaje} Puntos!')
                 
+    # def atacan_enemigos(self):
+    #     for enemigo in self.__enemies_class:
 
+    #         pygame.sprite.spritecollide(enemigo, self.__player_sprite,True)
+
+    
+    def retorno_puntaje(self):
+        return self.__player_sprite.puntaje 
             
 
     def run(self, delta_ms):
@@ -120,7 +118,7 @@ class Stage:
         self.__plataforma.update(self.__main_screen)
         self.__player.update(self.__main_screen, delta_ms,self.__plataforma_class)
         self.__player_sprite.draw(self.__main_screen)        
-        
+        self.retorno_puntaje()
         self.__enemies.update(delta_ms, self.__main_screen)
         
         self.colisionar_contra_enemigos()

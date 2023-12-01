@@ -2,6 +2,7 @@ import pygame
 from auxiliar.auxiliar import SurfaceManager as sf
 from auxiliar.constantes import *
 from models.Bullet import *
+from models.barra_vida import Barra_vida
 
 
 class Player(pygame.sprite.Sprite):
@@ -48,6 +49,17 @@ class Player(pygame.sprite.Sprite):
         self.max_x_constraint = constraint
         self.__jump = jump
         self.gravity = gravity
+
+
+        # #Vida
+        self.vida = self.__player_configs['life_points']
+        # self.barra_vida = Barra_vida(self.vida, 200,10)
+        # self.barra_vida.rect.x = self.__rect.x
+        # self.barra_vida.rect.y = self.__rect.y
+
+
+        #tiempo
+        self.__update_time = pygame.time.get_ticks()
         
         #Booleanos de movimientos
         self.__is_jumping = False
@@ -86,19 +98,16 @@ class Player(pygame.sprite.Sprite):
             self.agregar_x(-self.__speed)
             self.__is_looking_right = False
             self.__set_x_animations_preset(self.__walk_l, self.__is_looking_right)
-        elif keys [pygame.K_DOWN]: #Solo va a quedar ahora para probar movimientos
-            self.agregar_y(5)
+        # elif keys [pygame.K_DOWN]: #Solo va a quedar ahora para probar movimientos
+        #     self.agregar_y(5)
         elif keys[pygame.K_SPACE] and not self.__is_jumping:
-            
             self.saltar()
-            #self.stay()
-            
+            #self.stay()   
         elif keys [pygame.K_j] and not self.is_shooting:
             if self.__is_looking_right == True:
                 self.__set_x_animations_preset(self.__attack_laser_r,self.__is_looking_right)
                 self.disparar()
-            elif self.__is_looking_right == False:
-                
+            elif self.__is_looking_right == False:                
                 self.__set_x_animations_preset(self.__attack_laser_l, self.__is_looking_right)
                 self.disparar()
         else:
@@ -132,24 +141,19 @@ class Player(pygame.sprite.Sprite):
             if current_time - self.laser_time >= self.laser_cooldown:
                 self.ready = True
 
-    
     def saltar(self):
         
         if self.__is_looking_right == True:
             self.__actual_animation = self.__jump_r 
             self.agregar_y(-self.__jump)
             self.agregar_y(self.gravity)                    
-            self.agregar_x(self.__speed-3)
-            
+            self.agregar_x(self.__speed-3)       
         else:
             self.__actual_animation = self.__jump_l
             self.agregar_y(-self.__jump)
             self.agregar_y(self.gravity)                    
-            self.agregar_x(-self.__speed-2)
+            self.agregar_x(-self.__speed+3)
 
-
-    # # Actualizar la posición del personaje
-    #     self.coord_x += self.__rect.x
         
     def stay(self):
         if self.__is_looking_right == True:
@@ -178,23 +182,30 @@ class Player(pygame.sprite.Sprite):
             self.rect_ground_collition_top.bottom = 555
             
     def do_animation(self, delta_ms,lista_plataformas):
+        # deberia de agregarle un current time para evitar el exceso de superar limite de lista
         self.__player_animation_time += delta_ms
+
+        # current_time = pygame.time.get_ticks()
+        # if current_time - self.__update_time > self.__frame_rate:
+        #     self.__update_time = current_time
+        #     self.__actual_frame_index +=1
+
+
+
         if self.__player_animation_time >= self.__frame_rate:
             self.__player_animation_time = 0
             if self.__actual_frame_index < len(self.__actual_animation) - 1:
                 self.__actual_frame_index += 1
             else:
                 self.__actual_frame_index = 0
-                if self.__is_jumping:
-                    self.__is_jumping = False
-                    self.__rect.y = 0
+                # if self.__is_jumping:     no entiendo bien esta parte del codigo
+                #     self.__is_jumping = False
+                #     self.__rect.y = 0
                     
             if self.toca_plataforma(lista_plataformas) == False:
-                    
-                    self.agregar_y(self.gravity+10)
-                
-            elif self.__is_jumping:
-                self.__is_jumping = False
+                    self.agregar_y(self.gravity+10)        
+            # elif self.__is_jumping:     #no entiendo esta parte del codigo
+            #     self.__is_jumping = False
                 
                 
     def toca_plataforma(self, list_plataformas : list):
@@ -209,7 +220,6 @@ class Player(pygame.sprite.Sprite):
                     retorno = False
         return retorno
     
-
 
     def agregar_x(self,movimiento_x):
         self.__rect.x += movimiento_x
@@ -231,7 +241,6 @@ class Player(pygame.sprite.Sprite):
         self.bullet_group.update(screen)
 
     def draw(self, screen: pygame.surface.Surface):
-
         
         if (DEBUG):
             pygame.draw.rect(screen,ROJO,self.__rect)

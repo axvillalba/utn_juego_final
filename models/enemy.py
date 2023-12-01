@@ -1,6 +1,7 @@
 import pygame
 import random as rd
 from models.Bullet import Bullet
+from auxiliar.constantes import *
 
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, pos, constraint_x, constraint_y, stage_dict_configs: dict):
@@ -71,4 +72,8 @@ class Enemy(pygame.sprite.Sprite):
         self.constraint()
     
     def draw(self, screen: pygame.surface.Surface):
+        if (DEBUG):
+            pygame.draw.rect(screen,AMARILLO,self.rect)
+
+
         screen.blit(self.image, self.rect)

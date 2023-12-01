@@ -32,13 +32,17 @@ while juego_on == True:
     current_time_txt = f'Time: {segundos} SEG '
     fuente = pg.font.Font("assets\Fonts\Blomberg-8MKKZ.otf", 25)
     texto = fuente.render(current_time_txt, True, COLOR_LINDO)
-    
-    
-    
-    
+
+    puntos = game.retorno_puntaje()
+    texto_puntos = f'Pts: {puntos}'
+    render_puntos = fuente.render(texto_puntos, True, COLOR_LINDO)
+
+
     screen.blit(back_img, back_img.get_rect())
     screen.blit(puntos_barra,(10,10))
+    screen.blit(puntos_barra,(380,10))
     screen.blit(texto, (50, 15))
+    screen.blit(render_puntos,(440,15))
     delta_ms = clock.tick(FPS)
     game.run(delta_ms)
     
