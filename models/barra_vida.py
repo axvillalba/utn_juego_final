@@ -1,15 +1,16 @@
 import pygame
 from auxiliar.constantes import * 
 
+
+
 class Barra_vida(pygame.sprite.Sprite):
     def __init__(self, vida_maxima, ancho,largo) :
         super().__init__()
-
-        self.vida_momento= vida_maxima
+    
+        self.vida_momento = self.vida
         self.vida_maxima = vida_maxima
         self.ancho = ancho
         self.largo = largo
-
         self.image = pygame.Surface((self.ancho, self.largo))
         self.rect = self.image.get_rect()
 
@@ -23,6 +24,8 @@ class Barra_vida(pygame.sprite.Sprite):
             self.image.fill(AMARILLO)
         else:
             self.image.fill(ROJO)
+            
+        self.draw()
 
     def draw(self, screen):
         screen.blit(self.image, self.rect)

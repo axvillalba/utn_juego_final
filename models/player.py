@@ -2,7 +2,6 @@ import pygame
 from auxiliar.auxiliar import SurfaceManager as sf
 from auxiliar.constantes import *
 from models.Bullet import *
-from models.barra_vida import Barra_vida
 
 
 class Player(pygame.sprite.Sprite):
@@ -40,9 +39,9 @@ class Player(pygame.sprite.Sprite):
         self.__frame_rate = frame_rate
         self.__actual_animation = self.__iddle_r
         self.__actual_img_animation = self.__actual_animation[self.__actual_frame_index]
-        self.__rect = self.__actual_img_animation.get_rect(midbottom=(coord_x, coord_y))
-        self.rect_ground_collition_floor = pygame.Rect(self.__rect.x, self.__rect.y + self.__rect.h - altura_rect, self.__rect.w, altura_rect)
-        self.rect_ground_collition_top = pygame.Rect(self.__rect.x, self.__rect.y, self.__rect.w, altura_rect)
+        self.rect = self.__actual_img_animation.get_rect(midbottom=(coord_x, coord_y))
+        self.rect_ground_collition_floor = pygame.Rect(self.rect.x, self.rect.y + self.rect.h - altura_rect, self.rect.w, altura_rect)
+        self.rect_ground_collition_top = pygame.Rect(self.rect.x, self.rect.y, self.rect.w, altura_rect)
         
         # Atributos de movimiento / speed=movimientos de pixeles que se mueve el personaje (recibe el valor por parametro) / constrait = restriccion de mov en el eje x
         self.__speed = speed 
@@ -51,11 +50,16 @@ class Player(pygame.sprite.Sprite):
         self.gravity = gravity
 
 
-        # #Vida
+        #Vida
         self.vida = self.__player_configs['life_points']
-        # self.barra_vida = Barra_vida(self.vida, 200,10)
-        # self.barra_vida.rect.x = self.__rect.x
-        # self.barra_vida.rect.y = self.__rect.y
+        
+        self.__vida_maxima = 100
+        self.barra_ancho = barra_vida_ancho
+        self.barra_alto = barra_vida_alto
+        self.porcentaje_vida = self.vida / self.__vida_maxima
+        self.barra_image = pygame.Surface((self.barra_ancho * self.porcentaje_vida, self.barra_alto))
+        self.barra_contraste = pygame.Surface((self.barra_ancho, self.barra_alto))
+        self.barra_rect = self.barra_image.get_rect(midbottom=(300,35))
 
 
         #tiempo
@@ -113,7 +117,6 @@ class Player(pygame.sprite.Sprite):
         else:
             self.stay()
             
-
     @property
     def get_bullets(self) -> list[Bullet]:
         return self.bullet_group
@@ -130,7 +133,7 @@ class Player(pygame.sprite.Sprite):
             direccion = 'right'
         else:
             direccion = 'left'
-        return Bullet(self.__rect.x, self.__rect.y, direccion, True)
+        return Bullet(self.rect.x, self.rect.y, direccion, True)
 
     def shoot_laser(self):  # disparar laser
         self.bullet_group.add(self.create_bullet())
@@ -154,7 +157,6 @@ class Player(pygame.sprite.Sprite):
             self.agregar_y(self.gravity)                    
             self.agregar_x(-self.__speed+3)
 
-        
     def stay(self):
         if self.__is_looking_right == True:
             self.__actual_animation = self.__iddle_r
@@ -162,35 +164,31 @@ class Player(pygame.sprite.Sprite):
             self.__actual_animation = self.__iddle_l
         self.__actual_frame_index = 0
 
-
     def constraint(self):  # Ajusta al jugador a los limites de la pantalla
-        if self.__rect.left<= 12:
-            self.__rect.left = 12
+        if self.rect.left<= 12:
+            self.rect.left = 12
             self.rect_ground_collition_floor.left = 12
             self.rect_ground_collition_top.left = 12
-        if self.__rect.right >= self.max_x_constraint:
-            self.__rect.right = self.max_x_constraint
+        if self.rect.right >= self.max_x_constraint:
+            self.rect.right = self.max_x_constraint
             self.rect_ground_collition_floor.right = self.max_x_constraint
             self.rect_ground_collition_top.right = self.max_x_constraint
-        if self.__rect.top <= 100:
-            self.__rect.top = 100
+        if self.rect.top <= 100:
+            self.rect.top = 100
             self.rect_ground_collition_floor.top
             self.rect_ground_collition_top.top= 100
-        if self.__rect.bottom >= 555:
-            self.__rect.bottom = 555
+        if self.rect.bottom >= 555:
+            self.rect.bottom = 555
             self.rect_ground_collition_floor.bottom = 555
             self.rect_ground_collition_top.bottom = 555
-            
+    
     def do_animation(self, delta_ms,lista_plataformas):
         # deberia de agregarle un current time para evitar el exceso de superar limite de lista
         self.__player_animation_time += delta_ms
-
         # current_time = pygame.time.get_ticks()
         # if current_time - self.__update_time > self.__frame_rate:
         #     self.__update_time = current_time
         #     self.__actual_frame_index +=1
-
-
 
         if self.__player_animation_time >= self.__frame_rate:
             self.__player_animation_time = 0
@@ -206,11 +204,10 @@ class Player(pygame.sprite.Sprite):
                     self.agregar_y(self.gravity+10)        
             # elif self.__is_jumping:     #no entiendo esta parte del codigo
             #     self.__is_jumping = False
-                
-                
+    
     def toca_plataforma(self, list_plataformas : list):
         retorno = False
-        if self.__rect.y >= 500:
+        if self.rect.y >= 500:
             retorno = True
         else:
             for plataforma in list_plataformas:
@@ -219,17 +216,29 @@ class Player(pygame.sprite.Sprite):
                 elif self.rect_ground_collition_top.colliderect(plataforma.rect_ground_collition_bottom):
                     retorno = False
         return retorno
-    
 
     def agregar_x(self,movimiento_x):
-        self.__rect.x += movimiento_x
+        self.rect.x += movimiento_x
         self.rect_ground_collition_floor.x += movimiento_x
         self.rect_ground_collition_top.x += movimiento_x
+    
     def agregar_y(self,movimiento_y):
-        self.__rect.y += movimiento_y 
+        self.rect.y += movimiento_y 
         self.rect_ground_collition_floor.y += movimiento_y
         self.rect_ground_collition_top.y += movimiento_y
 
+    def mostrar_vida(self):
+        vida_momento = self.vida
+        self.barra_rect.width = int((vida_momento / self.__vida_maxima) * self.barra_ancho)
+        self.barra_contraste.fill(ROJO)
+        
+        if vida_momento > self.__vida_maxima / 2:
+            self.barra_image.fill(VERDE)
+        elif vida_momento > self.__vida_maxima / 4:
+            self.barra_image.fill(AMARILLO)
+        else:
+            self.barra_image.fill(ROJO)
+    
 
     def update(self, screen: pygame.surface.Surface, delta_ms, lista_plataformas):
         
@@ -239,15 +248,18 @@ class Player(pygame.sprite.Sprite):
         self.recharge()
         self.bullet_group.draw(screen)
         self.bullet_group.update(screen)
+        self.mostrar_vida()
+        self.draw(screen)
 
     def draw(self, screen: pygame.surface.Surface):
         
         if (DEBUG):
-            pygame.draw.rect(screen,ROJO,self.__rect)
+            pygame.draw.rect(screen,ROJO,self.rect)
             pygame.draw.rect(screen,VERDE,self.rect_ground_collition_floor)
             pygame.draw.rect(screen,VERDE,self.rect_ground_collition_top)
         
-            
+        
         self.__actual_img_animation = self.__actual_animation[self.__actual_frame_index]
-        screen.blit(self.__actual_img_animation, self.__rect)
+        screen.blit(self.__actual_img_animation, self.rect)
+        screen.blit(self.barra_image, self.barra_rect)
         

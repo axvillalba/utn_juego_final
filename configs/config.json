@@ -2,15 +2,17 @@
     "stage_1": {
         
         "background": {
-            "bg_img" : "./assets/graphics/stage1_background.png",
-            "fondo_datos":"./assets/graphics/interfaz/Banner04.png"
+            "bg_img" : "./assets/graphics/background/stage1_background.png",
+            "fondo_datos":"./assets/graphics/interfaz/Banner04.png",
+            "barra_vida":"./assets/graphics/interfaz/bgload.png"
         },
 
         "enemy": {
             "enemy_img": "./assets/graphics/Enemy/solo_timca.png",
             "max_enemy_speed": 2,
             "min_enemy_speed": 1,
-            "percentaje_shoot": 1
+            "percentaje_shoot": 1,
+            "damage": 0.5
         },
         
         "player": {
@@ -20,100 +22,104 @@
             "life_points": 100
         },
         "stage": {
-            "max_amount_enemies": 5,
+            "max_amount_enemies": 10,
             "max_amount_plataform": 17,
             "coords_enemies": [
                 {
-                    "coord_x": 20,
-                    "coord_y": 270
+                    "coord_x": 20, "coord_y": 270
                 },
                 {
-                    "coord_x": 565,
-                    "coord_y": 335
+                    "coord_x": 565, "coord_y": 335
                 },
                 {
-                    "coord_x": 100,
-                    "coord_y": 150
+                    "coord_x": 100, "coord_y": 350
+                },
+                {
+                    "coord_x": 20, "coord_y": 270
+                },
+                {
+                    "coord_x": 565, "coord_y": 380
+                },
+                {
+                    "coord_x": 100, "coord_y": 280
+                },
+                {
+                    "coord_x": 200, "coord_y": 450
+                },
+                {
+                    "coord_x": 500, "coord_y": 350
+                },
+                {
+                    "coord_x": 120, "coord_y": 480
                 }
             ],
 
             "coord_plataformas": [
                     {   
-                        "coord_x":157,
-                        "coord_y":230
+                        "coord_x":157, "coord_y":230
                     },
                     {
-                        "coord_x":250,
-                        "coord_y":230
+                        "coord_x":250, "coord_y":230
                     },
                     {   
-                        "coord_x":345,
-                        "coord_y":230
+                        "coord_x":345, "coord_y":230
                     },
                     {   
-                        "coord_x":441,
-                        "coord_y":230
+                        "coord_x":441, "coord_y":230
                     },
                     {
-                        "coord_x":60,
-                        "coord_y":298
+                        "coord_x":60, "coord_y":298
                     },
                     {   
-                        "coord_x":538,
-                        "coord_y":298
+                        "coord_x":538, "coord_y":298
                     },                    
                     {
-                        "coord_x":60,
-                        "coord_y":366
+                        "coord_x":60, "coord_y":366
                     },
                     {
-                        "coord_x":156,
-                        "coord_y":366
+                        "coord_x":156, "coord_y":366
                     },
                     {   
-                        "coord_x":443,
-                        "coord_y":366
+                        "coord_x":443, "coord_y":366
                     },
                     {
-                        "coord_x":538,
-                        "coord_y":366
+                        "coord_x":538, "coord_y":366
                     },
                     {
-                        "coord_x":60,
-                        "coord_y":436
+                        "coord_x":60, "coord_y":436
                     },
                     {
-                        "coord_x":538,
-                        "coord_y":436
+                        "coord_x":538, "coord_y":436
                     },
                     {
-                        "coord_x":443,
-                        "coord_y":470
+                        "coord_x":443, "coord_y":470
                     },
                     {
-                        "coord_x":156,
-                        "coord_y":470
+                        "coord_x":156, "coord_y":470
                     },
                     {
-                        "coord_x":254,
-                        "coord_y":504
+                        "coord_x":254, "coord_y":504
                     },
                     {
-                        "coord_x":347,
-                        "coord_y":504
+                        "coord_x":347, "coord_y":504
                     }
         ]
 
         },
         "plataforma": {
-            "plataforma_img" :"./assets/graphics/plataforma_stage1.png"
+            "plataforma_img" :"./assets/graphics/interfaz/plataforma_stage1.png"
 
         }
     },
 
 
 
-
+    "main_page":{
+        "background": {
+            "path_img" : ".assets/graphics/background/pantalla_inical_juego.jpg"
+            
+        }
+    },
 
 
 
