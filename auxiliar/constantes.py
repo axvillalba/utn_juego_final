@@ -1,11 +1,12 @@
 import json
 
+nombre_juego = "En busqueda de Timcanpy"
 screen_w = 600
 screen_h = 600
 FPS = 60
 CONFIG_FILE_PATH = './configs/config.json'
 path_font = './assets/Fonts/Blomberg-8MKKZ.otf'
-DEBUG = False
+DEBUG = True
 ROJO = (255,0,0)
 AZUL = (0,0,255)
 VERDE = (0,255,0)

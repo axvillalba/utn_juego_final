@@ -8,8 +8,6 @@ class Enemy(pygame.sprite.Sprite):
         super().__init__()
         #Abrimos el archivo json y lo convertimos en diccionario 
         self.__enemy_configs = stage_dict_configs.get('enemy')
-        self.__percentaje_shoot = self.__enemy_configs["percentaje_shoot"]
-
         #Mostrar sprite del jugador
         self.image = pygame.image.load(self.__enemy_configs["enemy_img"]).convert_alpha()
         #En este caso lo que hago es darle el rectangulo al sprite de la linea anterior. ahora self.rect tendrá los metodos de rectangulos. 
@@ -22,8 +20,6 @@ class Enemy(pygame.sprite.Sprite):
         self.frame_rate = 120
         self.time_move = 0
         self.move_right = True
-        self.bullet_group = pygame.sprite.Group()
-
 
     def constraint(self):  # Ajusta al jugador a los limites de la pantalla
         if self.move_right:
@@ -45,18 +41,6 @@ class Enemy(pygame.sprite.Sprite):
     def __setear_velocidad(self):
         self.speed = rd.randint(self.__enemy_configs["min_enemy_speed"], self.__enemy_configs["max_enemy_speed"])
 
-    def create_bullet(self):
-        return Bullet(self.rect.centerx, self.rect.bottom, 'down')
-
-    def shoot_laser(self):  # disparar laser
-        self.bullet_group.add(self.create_bullet())
-    
-    def can_shoot(self) -> bool:
-        return rd.random() * 500 <= self.__percentaje_shoot
-    
-    def is_shooting(self) -> bool:
-        return self.can_shoot()
-
     def do_movement(self, delta_ms):
         self.time_move += delta_ms
         if self.time_move >= self.frame_rate:
@@ -64,16 +48,11 @@ class Enemy(pygame.sprite.Sprite):
 
     def update(self, delta_ms, screen: pygame.surface.Surface):
         self.do_movement(delta_ms)
-        # if self.is_shooting():
-        #     self.shoot_laser()
         self.draw(screen)
-        self.bullet_group.draw(screen)
-        self.bullet_group.update()
         self.constraint()
     
     def draw(self, screen: pygame.surface.Surface):
         if (DEBUG):
             pygame.draw.rect(screen,AMARILLO,self.rect)
-
 
         screen.blit(self.image, self.rect)

@@ -4,7 +4,8 @@
         "background": {
             "bg_img" : "./assets/graphics/background/stage1_background.png",
             "fondo_datos":"./assets/graphics/interfaz/Banner04.png",
-            "barra_vida":"./assets/graphics/interfaz/bgload.png"
+            "barra_vida":"./assets/graphics/interfaz/bgload.png",
+            "musica": "./assets/sounds/sounds_game/bells.wav"
         },
 
         "enemy": {
@@ -16,14 +17,45 @@
         },
         
         "player": {
-            "player_stand":"./assets/graphics/player_allen/player.png",
-            "player_walk": "./assets/graphics/player_allen/run.png",
-            "player_shoot":"./assets/graphics/player_allen/shoot.png",
+            "player_stand":"./assets/graphics/player_allen/stand.png",
+            "player_walk": "./assets/graphics/player_allen/walk.png",
+            "player_shoot":"./assets/graphics/player_allen/attack_3.png",
+            "player_jump":"./assets/graphics/player_allen/player_jump.png",
+            "player_loose": "./assets/graphics/player_allen/loose.png",
             "life_points": 100
         },
         "stage": {
             "max_amount_enemies": 10,
             "max_amount_plataform": 17,
+            "max_amount_frutas": 5,
+            "max_amount_trampas": 10,
+
+
+            "coords_trampas": [
+                {
+                    "coord_x": 400, "coord_y": 50
+                },
+                {
+                    "coord_x": 300, "coord_y": 50
+                },
+                {   
+                    "coord_x": 120, "coord_y": 50
+                }
+            ],
+                
+
+            "coords_frutas": [
+            {
+                "coord_x": 400, "coord_y": 400
+            },
+            {
+                "coord_x": 450, "coord_y": 200
+            },
+            {   
+                "coord_x": 120, "coord_y": 400
+            }
+        ],
+            
             "coords_enemies": [
                 {
                     "coord_x": 20, "coord_y": 270
@@ -104,13 +136,21 @@
                         "coord_x":347, "coord_y":504
                     }
         ]
-
         },
         "plataforma": {
             "plataforma_img" :"./assets/graphics/interfaz/plataforma_stage1.png"
-
+        },
+        "frutas":{
+            "frutas_img": "./assets/graphics/frutas_trampas/apple__x1_iconic_png_1354829396.png",
+            "vida_adicional": 10
+        },
+        "trampas": {
+            "trampas_img": "./assets/graphics/frutas_trampas/trampa_fuego.png",
+            "damage": 0.1
+            
         }
     },
+
 
 
 

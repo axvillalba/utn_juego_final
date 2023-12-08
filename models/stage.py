@@ -3,6 +3,8 @@ import pygame
 from models.player import Player
 from models.enemy import Enemy
 from models.plataforma import Plataforma
+from models.fruta import Fruta
+from models.trampas import Trampas
 
 
 class Stage:
@@ -13,9 +15,10 @@ class Stage:
         
         #Aca deberia de colocar el background y datos que corresponda segun el nivel
         
-        #Creo las plataformas del stage
+        #Creo las plataformas del stage y de las frutas
         self.__plataforma = pygame.sprite.Group()
-        
+        self.__fruta = pygame.sprite.Group()
+        self.__trampa = pygame.sprite.Group()
         # Creo al jugador en la variable player_sprite
         self.__player_sprite = Player(limit_w / 2, 155, limit_h-12, frame_rate = 120, speed=5, gravity = 6, jump = 10,  stage_dict_configs=self.__configs)  # posicion inicial      
         #En self.player voy almacenar y manipular los sprites de player que voy a generar en la linea anterior
@@ -27,10 +30,22 @@ class Stage:
         self.__stage_configs = self.__configs.get('stage')
         self.__max_enemies = self.__stage_configs["max_amount_enemies"]
         self.__coordenadas_enemigos = self.__stage_configs.get("coords_enemies")
+        self.__enemies_config = self.__configs.get('enemy')
+        self.__damage_enemy = self.__enemies_config["damage"]
+
         self.__max_plataform = self.__stage_configs["max_amount_plataform"]
         self.__coords_plataform = self.__stage_configs[ "coord_plataformas"]
-        self.__enemies_config = self.__configs.get('enemy')
-        self.__damage_enemy = self.__enemies_config["damage"]     
+
+        
+        self.__max_frutas = self.__stage_configs["max_amount_frutas"]
+        self.__coordenadas_frutas = self.__stage_configs.get("coords_frutas")
+        self.__frutas_configs = self.__configs.get("frutas")
+        self.__fruta_vida_adicion = self.__frutas_configs['vida_adicional']
+        
+        self.__max_trampas = self.__stage_configs["max_amount_trampas"]
+        self.__coords_trampas = self.__stage_configs["coords_trampas"]
+        self.__trampa_configs = self.__configs.get('trampas')
+        self.__damage_trampa = self.__trampa_configs['damage']
         
         #Variables sobre el tamaño de pantalla y el surface para la creacion del mismo
         self.__limit_w = limit_w
@@ -49,10 +64,21 @@ class Stage:
         for enemy in self.__enemies_class:
             self.__enemies.add(enemy)
             
+        #Creacion de las frutas
+        self.__frutas_class = []
+        self.create_frutas()
+        for frutas in self.__frutas_class:
+            self.__fruta.add(frutas)
+            
+        # #Creacion de las trampas    
+        # self.__trampas_class = []
+        # self.create_trampas()
+        # for trampas in self.__trampas_class:
+        #     self.__trampas_class.append(trampas)
+        
         self.tiempo_inicios = pygame.time.get_ticks()    
         
-        self.__player_win = True
-        
+
 
     def controlar(self):    #Llamo a la funcion de la clase player para poder controlar sus movimientos
         self.__player_sprite.get_actividad()
@@ -68,6 +94,21 @@ class Stage:
                 self.__plataforma_class.append(
                     Plataforma((self.__coords_plataform[coordenada].get("coord_x"),
                                 self.__coords_plataform[coordenada].get("coord_y")),
+                    self.__configs)
+                )
+                
+    def create_frutas(self):
+        if self.__max_frutas > len (self.__coordenadas_frutas):
+            for coordenada in self.__coordenadas_frutas:
+                self.__frutas_class.append(
+                    Fruta((coordenada.get("coord_x"), coordenada.get("coord_y")), 
+                    self.__configs)
+                )
+        elif self.__max_frutas <= len (self.__coordenadas_frutas):
+            for coordenada in range(self.__max_frutas):
+                self.__frutas_class.append(
+                    Fruta((self.__coordenadas_frutas[coordenada].get("coord_x"), 
+                            self.__coordenadas_frutas[coordenada].get("coord_y")), 
                     self.__configs)
                 )
         
@@ -89,6 +130,24 @@ class Stage:
                     self.__limit_w, self.__limit_h, self.__configs)
                 )
 
+    # def create_trampas(self):
+    #     if self.__max_trampas > len(self.__coords_trampas): 
+
+    #         for coordenada in self.__coords_trampas:
+    #             self.__trampas_class.append(
+    #                 Trampas((coordenada.get("coord_x"), coordenada.get("coord_y")), 
+    #                 self.__configs)
+    #             )
+    #     elif self.__max_trampas <= len(self.__coords_trampas):
+    #         #Si la cantidad maxima de enemigos es menor o igual a las coordenadas enemigos(Se refiere a la lista que contiene en cada indice una coordenada)
+    #         for coordenada in range(self.__max_trampas):
+    #             self.__trampas_class.append(
+    #                 Trampas((self.__coords_trampas[coordenada].get("coord_x"), 
+    #                         self.__coords_trampas[coordenada].get("coord_y")), 
+    #                 self.__configs)
+    #             )
+        
+            
     def colisionar_contra_enemigos(self):
         for bullet in self.__player_sprite.get_bullets:
             cantidad_antes = len(self.__enemies)
@@ -97,18 +156,25 @@ class Stage:
             if cantidad_antes > cantidad_despues:
                 cantidad_vencido = cantidad_antes - cantidad_despues
                 self.__player_sprite.puntaje += cantidad_vencido * 100
+                bullet.kill()
                 print(f'Puntaje actual: {self.__player_sprite.puntaje} Puntos')
             if len(self.__enemies) == 0 and not self.__player_win:
                 self.__player_win = True
                 print(f'Ganaste la partida con: {self.__player_sprite.puntaje} Puntos!')
-    
+                
+    def toco_fruta(self):
+        if pygame.sprite.groupcollide(self.__player, self.__fruta, False, True):
+            self.__player_sprite.vida += self.__fruta_vida_adicion
+
     def atacan_enemigos(self):
-        
         if pygame.sprite.groupcollide(self.__player, self.__enemies,False, False):
-                # print("Te dieron!! cuidadoooooooooooooooo")
                 self.__player_sprite.vida -= self.__damage_enemy
-                # print(f'{self.__player_sprite.vida} vida')  
-                # print(f'Vida restante: {self.__player_sprite.vida}')
+
+    def atacan_trampas(self):
+        if pygame.sprite.groupcollide(self.__player, self.__trampa,False, True):
+            self.__player_sprite.vida -= self.__damage_trampa
+
+
 
     def retorno_puntaje(self):
         return self.__player_sprite.puntaje
@@ -120,14 +186,15 @@ class Stage:
         # Actualizar todos los grupos de sprites
         # Dibujar todos los grupos de sprites
         # Actualizar y Dibujar Jugador        
-        
-        self.__plataforma.update(self.__main_screen)
-        self.__player_sprite.update(self.__main_screen, delta_ms,self.__plataforma_class)
-        #self.__player_sprite.draw(self.__main_screen)        
-        self.retorno_puntaje()
-        self.__enemies.update(delta_ms, self.__main_screen)
-        self.atacan_enemigos()
         self.retorno_vida()
+        self.__plataforma.update(self.__main_screen)
+        self.__fruta.update(self.__main_screen)
+        self.__player_sprite.update(self.__main_screen, delta_ms,self.__plataforma_class) 
+        self.__enemies.update(delta_ms, self.__main_screen)
+        #self.__trampa.update(self.__main_screen)
+        self.atacan_enemigos()
         self.colisionar_contra_enemigos()
         
-        #self.enemies.draw(self.__main_screen)
+        # self.atacan_trampas()
+        self.toco_fruta()
+        

@@ -8,31 +8,21 @@ class Player(pygame.sprite.Sprite):
     
     def __init__(self, coord_x, coord_y, constraint, frame_rate, speed, jump, gravity, stage_dict_configs: dict):
         super().__init__()
-        
+
         #Cargar del json el diccionario del player
         self.__player_configs = stage_dict_configs.get('player')
-        # Mostrar sprite del jugador / Solo la figura estatica / probar con eso, despues le damos movimiento a la imagen.
-        
-        
-        # self.image = pygame.image.load(self.__player_configs['player_stand']).convert_alpha()
-        # #En este caso lo que hago es darle el rectangulo al sprite de la linea anterior. ahora self.rect tendrá los metodos de rectangulos. 
-        #self.__rect = self.image.get_rect(midbottom=(coord_x, coord_y))
-        
-        
-        self.__iddle_r = sf.get_surface_from_spritesheet('./assets/graphics/player_allen/stand.png',4,1)
-        self.__iddle_l = sf.get_surface_from_spritesheet('./assets/graphics/player_allen/stand.png',4,1, flip=True)        
-        self.__walk_r = sf.get_surface_from_spritesheet('./assets/graphics/player_allen/walk.png', 3,1)
-        self.__walk_l = sf.get_surface_from_spritesheet('./assets/graphics/player_allen/walk.png', 3,1, flip=True)
+
+        self.__iddle_r = sf.get_surface_from_spritesheet(self.__player_configs.get('player_stand'),4,1)
+        self.__iddle_l = sf.get_surface_from_spritesheet(self.__player_configs.get('player_stand'),4,1, flip=True)        
+        self.__walk_r = sf.get_surface_from_spritesheet(self.__player_configs.get('player_walk'), 3,1)
+        self.__walk_l = sf.get_surface_from_spritesheet(self.__player_configs.get('player_walk'), 3,1, flip=True)
         # self.__attack_melee_r = sf.get_surface_from_spritesheet('./assets/graphics/player_allen/attack_melee.png',7,1)
         # self.__attack_melee_l = sf.get_surface_from_spritesheet('./assets/graphics/player_allen/attack_melee.png',7,1, flip=True)
-        self.__attack_laser_r = sf.get_surface_from_spritesheet('./assets/graphics/player_allen/attack_3.png',4,1)
-        self.__attack_laser_l = sf.get_surface_from_spritesheet('./assets/graphics/player_allen/attack_3.png',4,1, flip = True)
-        self.__jump_r = sf.get_surface_from_spritesheet('./assets/graphics/player_allen/player_jump.png',8,1)
-        self.__jump_l = sf.get_surface_from_spritesheet('./assets/graphics/player_allen/player_jump.png',8,1, flip = True)
-        #self.__fall_r = sf.get_surface_from_spritesheet('./assets/graphics/fall.png', 4,1)
-        
-        #self.__image_shot = sf.get_surface_from_spritesheet('./assets\graphics\player_allen\power_attack.png',8,1)
-        #self.__rect_disparo = self.__rect
+        self.__attack_laser_r = sf.get_surface_from_spritesheet(self.__player_configs.get('player_shoot'),4,1)
+        self.__attack_laser_l = sf.get_surface_from_spritesheet(self.__player_configs.get('player_shoot'),4,1, flip = True)
+        self.__jump_r = sf.get_surface_from_spritesheet(self.__player_configs.get('player_jump'),6,1)
+        self.__jump_l = sf.get_surface_from_spritesheet(self.__player_configs.get('player_jump'),6,1, flip = True)
+        self.__loose_r = sf.get_surface_from_spritesheet(self.__player_configs.get('player_loose'),6,1)
         
         self.__player_animation_time = 0
         self.__actual_frame_index = 0
@@ -52,6 +42,7 @@ class Player(pygame.sprite.Sprite):
 
         #Vida
         self.vida = self.__player_configs['life_points']
+        self.__player_vivo = True
         
         self.__vida_maxima = 100
         self.barra_ancho = barra_vida_ancho
@@ -61,15 +52,13 @@ class Player(pygame.sprite.Sprite):
         self.barra_contraste = pygame.Surface((self.barra_ancho, self.barra_alto))
         self.barra_rect = self.barra_image.get_rect(midbottom=(300,35))
 
-
         #tiempo
         self.__update_time = pygame.time.get_ticks()
         
         #Booleanos de movimientos
         self.__is_jumping = False
         self.__is_looking_right = True
-        #self.__is_fallen = False
-        
+
         #coordenadas
         self.coord_x = coord_x
         self.coord_y = coord_y
@@ -111,6 +100,7 @@ class Player(pygame.sprite.Sprite):
             if self.__is_looking_right == True:
                 self.__set_x_animations_preset(self.__attack_laser_r,self.__is_looking_right)
                 self.disparar()
+                pygame.mixer.Sound("./assets/sounds/sounds_game/inocencia_activada.wav")
             elif self.__is_looking_right == False:                
                 self.__set_x_animations_preset(self.__attack_laser_l, self.__is_looking_right)
                 self.disparar()
@@ -204,7 +194,11 @@ class Player(pygame.sprite.Sprite):
                     self.agregar_y(self.gravity+10)        
             # elif self.__is_jumping:     #no entiendo esta parte del codigo
             #     self.__is_jumping = False
-    
+            
+            if self.is_alive() == False:
+                self.rect.y += 50
+                self.toca_plataforma(lista_plataformas)
+                    
     def toca_plataforma(self, list_plataformas : list):
         retorno = False
         if self.rect.y >= 500:
@@ -216,7 +210,7 @@ class Player(pygame.sprite.Sprite):
                 elif self.rect_ground_collition_top.colliderect(plataforma.rect_ground_collition_bottom):
                     retorno = False
         return retorno
-
+    
     def agregar_x(self,movimiento_x):
         self.rect.x += movimiento_x
         self.rect_ground_collition_floor.x += movimiento_x
@@ -238,6 +232,16 @@ class Player(pygame.sprite.Sprite):
             self.barra_image.fill(AMARILLO)
         else:
             self.barra_image.fill(ROJO)
+            
+    def is_alive(self):
+        vida_mometo = self.vida
+        if vida_mometo <= 0 :
+            self.__player_vivo == False
+            self.__set_x_animations_preset(self.__loose_r,True)
+            return False
+        else :
+            return True
+            
     
 
     def update(self, screen: pygame.surface.Surface, delta_ms, lista_plataformas):
@@ -246,6 +250,7 @@ class Player(pygame.sprite.Sprite):
         self.get_actividad()
         self.constraint()
         self.recharge()
+        self.is_alive()
         self.bullet_group.draw(screen)
         self.bullet_group.update(screen)
         self.mostrar_vida()

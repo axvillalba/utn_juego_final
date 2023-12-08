@@ -8,8 +8,12 @@ from auxiliar.auxiliar_assets import *
 
 screen = pg.display.set_mode((screen_w, screen_h))
 pg.init()
+pg.display.set_caption(nombre_juego)
 clock = pg.time.Clock()
+pg.mixer.init()
 
+sonido_fondo = pg.mixer.Sound(music_fondo)
+sonido_fondo.play(-1)
 
 
 
@@ -24,6 +28,7 @@ juego_on = True
 game = Stage(screen, screen_w, screen_h, 'stage_1') 
 
 while juego_on == True:
+    sonido_fondo.play(-1)
     
     
 
