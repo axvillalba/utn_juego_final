@@ -20,6 +20,8 @@ class Plataforma (py.sprite.Sprite):
         self.draw(screen)  
     
     def draw(self, screen: py.surface.Surface):
+        
+        
         if (DEBUG):
             py.draw.rect(screen,ROJO,self.rect)
             
