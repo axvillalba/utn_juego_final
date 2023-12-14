@@ -51,11 +51,11 @@ class Button(Widget):
     def update(self, lista_eventos):
         self.isclicked = False
         for evento in lista_eventos:
-           if evento.type == pygame.MOUSEBUTTONDOWN:
-               if self.slave_rect_collide.collidepoint(evento.pos):
-                   self.isclicked = True
-                   self._onclick(self._onclick_param)
-                   break
+            if evento.type == pygame.MOUSEBUTTONDOWN:
+                if self.slave_rect_collide.collidepoint(evento.pos):
+                    self.isclicked = True
+                    self._onclick(self._onclick_param)
+                    break
         self.draw()
                     
     def set_text(self, text):

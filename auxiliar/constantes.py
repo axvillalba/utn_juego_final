@@ -16,6 +16,8 @@ altura_rect = 10
 game_over_txt  = "FIN DEL JUEGO"
 barra_vida_ancho = 136
 barra_vida_alto = 12
+vida_global = 0
+puntos_global = 0
 
 
 def open_configs() -> dict:

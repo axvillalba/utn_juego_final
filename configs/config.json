@@ -12,11 +12,188 @@
         },
 
         "enemy": {
-            "enemy_img": "./assets/graphics/Enemy/solo_timca.png",
+            "enemy_img": "./assets/graphics/Enemy/black_timca.png",
             "max_enemy_speed": 2,
             "min_enemy_speed": 1,
             "percentaje_shoot": 1,
-            "damage": 0.5
+            "damage": 0.5,
+            "final_boss": "./assets/graphics/Enemy/final_boss.png",
+            "vida_final_boss": 300,
+            "damage_final_boss": 15
+
+        },
+        "player": {
+            "player_stand":"./assets/graphics/player_allen/stand.png",
+            "player_walk": "./assets/graphics/player_allen/walk.png",
+            "player_shoot":"./assets/graphics/player_allen/attack_3.png",
+            "player_jump":"./assets/graphics/player_allen/player_jump.png",
+            "player_loose": "./assets/graphics/player_allen/loose.png",
+            "life_points": 100,
+            "timcanpy_img":"./assets/graphics/player_allen/timcanpy_iddle.png"
+
+        },
+        "stage": {
+            "max_amount_enemies": 10,
+            "max_amount_plataform": 17,
+            "max_amount_frutas": 5,
+            "max_amount_trampas": 10,
+            "max_amount_gemas":5,
+
+            "coords_trampas": [
+                {
+                    "coord_x": 400, "coord_y": 50
+                },
+                {
+                    "coord_x": 200, "coord_y": 50
+                },
+                {   
+                    "coord_x": 120, "coord_y": 50
+                }
+            ],
+
+            "coords_frutas": [
+            {
+                "coord_x": 395, "coord_y": 305
+            },
+            {
+                "coord_x": 455, "coord_y": 205
+            },
+            {   
+                "coord_x": 120, "coord_y": 405
+            }
+            ],
+
+            "coords_gemas":[
+                {
+                "coord_x": 50, "coord_y": 350
+                }
+            
+            ],
+            "coords_enemies": [
+                {
+                    "coord_x": 20, "coord_y": 270
+                },
+                {
+                    "coord_x": 565, "coord_y": 335
+                },
+                {
+                    "coord_x": 100, "coord_y": 350
+                },
+                {
+                    "coord_x": 20, "coord_y": 270
+                },
+                {
+                    "coord_x": 565, "coord_y": 380
+                }
+
+            ],
+
+            "coord_plataformas": [
+                    {   
+                        "coord_x":157, "coord_y":230
+                    },
+                    {
+                        "coord_x":250, "coord_y":230
+                    },
+                    {   
+                        "coord_x":345, "coord_y":230
+                    },
+                    {   
+                        "coord_x":441, "coord_y":230
+                    },
+                    {
+                        "coord_x":60, "coord_y":298
+                    },
+                    {   
+                        "coord_x":538, "coord_y":298
+                    },                    
+                    {
+                        "coord_x":60, "coord_y":366
+                    },
+                    {
+                        "coord_x":156, "coord_y":366
+                    },
+                    {   
+                        "coord_x":443, "coord_y":366
+                    },
+                    {
+                        "coord_x":538, "coord_y":366
+                    },
+                    {
+                        "coord_x":60, "coord_y":436
+                    },
+                    {
+                        "coord_x":538, "coord_y":436
+                    },
+                    {
+                        "coord_x":443, "coord_y":470
+                    },
+                    {
+                        "coord_x":156, "coord_y":470
+                    },
+                    {
+                        "coord_x":254, "coord_y":504
+                    },
+                    {
+                        "coord_x":347, "coord_y":504
+                    }
+            ]
+
+        },
+
+        "plataforma": {
+            "plataforma_img" :"./assets/graphics/interfaz/plataforma_stage1.png"
+        },
+
+        "frutas":{
+            "frutas_img": "./assets/graphics/frutas_trampas/apple__x1_iconic_png_1354829396.png",
+            "vida_adicional": 10
+        },
+        
+        "trampas": {
+            "trampas_img": "./assets/graphics/frutas_trampas/trampa_fuego.png",
+            "damage": 8
+        },
+        "gemas":{
+            "gemas_img": "./assets/graphics/frutas_trampas/gem_ruby__x1_1_png_1354831652.png",
+            "suma_puntos": 50
+        }
+            
+        
+        
+    
+    },
+
+    "main_page":{
+        "background": {
+            "path_img" : "assets/graphics/background/03001877597.jpg"
+            
+        }
+    },
+
+    "stage_2": {
+        
+        "background": {
+            "bg_img" : "./assets/graphics/background/JUS_ShamanKingStage.png",
+            "fondo_datos":"./assets/graphics/interfaz/Banner04.png",
+            "barra_vida":"./assets/graphics/interfaz/bgload.png",
+            "musica": "./assets/sounds/sounds_game/bells.wav",
+            "risa_fondo": "./assets/sounds/sounds_game/risa_malvada.wav",
+            "ataque": "./assets/sounds/sounds_game/ataque.wav",
+            "timca": "./assets/sounds/sounds_game/timca.wav"
+            
+        },
+
+        "enemy": {
+            "enemy_img": "./assets/graphics/Enemy/black_timca.png",
+            "max_enemy_speed": 2,
+            "min_enemy_speed": 1,
+            "percentaje_shoot": 1,
+            "damage": 0.7,
+            "final_boss": "./assets/graphics/Enemy/final_boss.png",
+            "vida_final_boss": 200,
+            "damage_final_boss": 15
+
         },
         
         "player": {
@@ -25,35 +202,46 @@
             "player_shoot":"./assets/graphics/player_allen/attack_3.png",
             "player_jump":"./assets/graphics/player_allen/player_jump.png",
             "player_loose": "./assets/graphics/player_allen/loose.png",
-            "life_points": 100
+            "life_points": 100,
+            "timcanpy_img":"./assets/graphics/player_allen/timcanpy_iddle.png"
         },
         "stage": {
             "max_amount_enemies": 10,
             "max_amount_plataform": 17,
             "max_amount_frutas": 5,
             "max_amount_trampas": 10,
+            "max_amount_gemas":5,
 
             "coords_trampas": [
                 {
-                    "coord_x": 400, "coord_y": 100
+                    "coord_x": 45, "coord_y": 80
                 },
                 {
-                    "coord_x": 200, "coord_y": 100
+                    "coord_x": 450, "coord_y": 100
                 },
                 {   
-                    "coord_x": 120, "coord_y": 80
+                    "coord_x": 200, "coord_y": 80
                 }
             ],
 
             "coords_frutas": [
             {
-                "coord_x": 400, "coord_y": 400
-            },
-            {
-                "coord_x": 450, "coord_y": 200
+                "coord_x": 250, "coord_y": 250
             },
             {   
-                "coord_x": 120, "coord_y": 400
+                "coord_x": 120, "coord_y": 360
+            }
+            ],
+
+            "coords_gemas": [
+            {
+                "coord_x": 400, "coord_y": 500
+            },
+            {
+                "coord_x": 380, "coord_y": 120
+            },
+            {   
+                "coord_x": 120, "coord_y": 200
             }
             ],
             
@@ -146,29 +334,22 @@
 
         "frutas":{
             "frutas_img": "./assets/graphics/frutas_trampas/apple__x1_iconic_png_1354829396.png",
-            "vida_adicional": 10
+            "vida_adicional": 15
         },
         
         "trampas": {
             "trampas_img": "./assets/graphics/frutas_trampas/trampa_fuego.png",
             "damage": 5
-            
+        },
+        "gemas":{
+            "gemas_img": "./assets/graphics/frutas_trampas/gem_ruby__x1_1_png_1354831652.png",
+            "suma_puntos": 50
         }
     },
 
-
-    "main_page":{
+    "stage_3":{
         "background": {
-            "path_img" : "assets/graphics/background/03001877597.jpg"
-            
-        }
-    },
-
-
-    "stage_2": {
-        
-        "background": {
-            "bg_img" : "./assets/graphics/background/stage1_background.png",
+            "bg_img" : "./assets/graphics/background/JUS_ShamanKingStage.png",
             "fondo_datos":"./assets/graphics/interfaz/Banner04.png",
             "barra_vida":"./assets/graphics/interfaz/bgload.png",
             "musica": "./assets/sounds/sounds_game/bells.wav",
@@ -178,11 +359,15 @@
         },
 
         "enemy": {
-            "enemy_img": "./assets/graphics/Enemy/solo_timca.png",
+            "enemy_img": "./assets/graphics/Enemy/black_timca.png",
             "max_enemy_speed": 2,
             "min_enemy_speed": 1,
             "percentaje_shoot": 1,
-            "damage": 0.5
+            "damage": 0.7,
+            "final_boss": "./assets/graphics/Enemy/final_boss.png",
+            "vida_final_boss": 200,
+            "damage_final_boss": 15
+
         },
         
         "player": {
@@ -191,20 +376,22 @@
             "player_shoot":"./assets/graphics/player_allen/attack_3.png",
             "player_jump":"./assets/graphics/player_allen/player_jump.png",
             "player_loose": "./assets/graphics/player_allen/loose.png",
-            "life_points": 100
+            "life_points": 100,
+            "timcanpy_img":"./assets/graphics/player_allen/timcanpy_iddle.png"
         },
         "stage": {
             "max_amount_enemies": 10,
             "max_amount_plataform": 17,
             "max_amount_frutas": 5,
             "max_amount_trampas": 10,
+            "max_amount_gemas":5,
 
             "coords_trampas": [
                 {
-                    "coord_x": 400, "coord_y": 100
+                    "coord_x": 45, "coord_y": 80
                 },
                 {
-                    "coord_x": 200, "coord_y": 100
+                    "coord_x": 250, "coord_y": 100
                 },
                 {   
                     "coord_x": 120, "coord_y": 80
@@ -213,22 +400,31 @@
 
             "coords_frutas": [
             {
-                "coord_x": 400, "coord_y": 400
-            },
-            {
-                "coord_x": 450, "coord_y": 200
+                "coord_x": 250, "coord_y": 250
             },
             {   
-                "coord_x": 120, "coord_y": 400
+                "coord_x": 120, "coord_y": 360
+            }
+            ],
+
+            "coords_gemas": [
+            {
+                "coord_x": 400, "coord_y": 500
+            },
+            {
+                "coord_x": 380, "coord_y": 120
+            },
+            {   
+                "coord_x": 120, "coord_y": 200
             }
             ],
             
             "coords_enemies": [
                 {
-                    "coord_x": 20, "coord_y": 270
+                    "coord_x": 20, "coord_y": 260
                 },
                 {
-                    "coord_x": 565, "coord_y": 335
+                    "coord_x": 565, "coord_y": 312
                 },
                 {
                     "coord_x": 100, "coord_y": 350
@@ -240,16 +436,16 @@
                     "coord_x": 565, "coord_y": 380
                 },
                 {
-                    "coord_x": 100, "coord_y": 280
+                    "coord_x": 100, "coord_y": 290
                 },
                 {
-                    "coord_x": 200, "coord_y": 450
+                    "coord_x": 200, "coord_y": 420
                 },
                 {
-                    "coord_x": 500, "coord_y": 350
+                    "coord_x": 500, "coord_y": 100
                 },
                 {
-                    "coord_x": 120, "coord_y": 480
+                    "coord_x": 120, "coord_y": 430
                 }
             ],
 
@@ -312,12 +508,33 @@
 
         "frutas":{
             "frutas_img": "./assets/graphics/frutas_trampas/apple__x1_iconic_png_1354829396.png",
-            "vida_adicional": 10
+            "vida_adicional": 15
         },
         
         "trampas": {
             "trampas_img": "./assets/graphics/frutas_trampas/trampa_fuego.png",
             "damage": 5
+        },
+        "gemas":{
+            "gemas_img": "./assets/graphics/frutas_trampas/gem_ruby__x1_1_png_1354831652.png",
+            "suma_puntos": 50
         }
+
+
+    },
+
+    "GUI":{
+        "table":"./assets/graphics/interfaz/Table.png",
+        "home":"./assets/graphics/interfaz/home.png",
+        "menu_btn":"./assets/graphics/interfaz/Menu_BTN.png",
+
+        "close_btn":"./assets/graphics/interfaz/close_2.png",
+        "musica_fondo": "./assets/sounds/sounds_game/dgm-main_menu.wav",
+
+        "pantalla_previa":"./assets/graphics/background/incio_game.jpg",
+        "winwin": "./assets/graphics/interfaz/winwin.jpg",
+        "audio_final": "./assets/sounds/sounds_game/audio_final.wav"
+
     }
+
 }

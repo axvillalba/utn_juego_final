@@ -2,6 +2,7 @@ import pygame
 import random as rd
 from models.Bullet import Bullet
 from auxiliar.constantes import *
+from auxiliar.auxiliar import SurfaceManager as sf
 
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, pos, constraint_x, constraint_y, stage_dict_configs: dict):
@@ -12,7 +13,6 @@ class Enemy(pygame.sprite.Sprite):
         self.image = pygame.image.load(self.__enemy_configs["enemy_img"]).convert_alpha()
         #En este caso lo que hago es darle el rectangulo al sprite de la linea anterior. ahora self.rect tendrá los metodos de rectangulos. 
         self.rect = self.image.get_rect(midbottom=pos)
-
         # Atributos de movimiento
         self.__setear_velocidad()
         self.max_x_constraint = constraint_x

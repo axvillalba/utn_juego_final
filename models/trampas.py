@@ -7,9 +7,9 @@ class Trampas (py.sprite.Sprite):
     def __init__(self,pos, stage_dict_configs: dict) -> None:
         super().__init__()
         #me traigo el diccionario de plataforma 
-        self.__plataform_configs = stage_dict_configs.get('trampas')
+        self.__trampas_configs = stage_dict_configs.get('trampas')
         #cargo la imagen de la plataforma
-        self.image = py.image.load(self.__plataform_configs["trampas_img"])
+        self.image = py.image.load(self.__trampas_configs["trampas_img"])
         self.image = py.transform.scale(self.image, (16, 50))
         self.rect = self.image.get_rect(midbottom=pos)
         

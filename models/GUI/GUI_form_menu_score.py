@@ -4,6 +4,7 @@ from pygame.locals import *
 from models.GUI.GUI_button_image import *
 from models.GUI.GUI_form import *
 from models.GUI.GUI_label import *
+from auxiliar.auxiliar_assets import *
 
         
 class FormMenuScore(Form):
@@ -41,7 +42,7 @@ class FormMenuScore(Form):
                 cadena = f"{s}"
                 pos = Label(screen=self._slave, x=pos_inicial_x,y=pos_inicial_y,
                             w=w/2-margen_x,h=100,text = cadena, font="Verdana",font_size=30,
-                            font_color=(255,255,255),path_image="assets/graphics/interfaz/Table.png")
+                            font_color=(255,255,255),path_image=table_gui)
                 self.lista_widgets.append(pos)
                 pos_inicial_x += w/2-margen_x
                 
@@ -57,7 +58,7 @@ class FormMenuScore(Form):
                                         y = h-70,
                                         w = 50,
                                         h = 50,
-                                        path_image = "assets/graphics/interfaz/home.png", 
+                                        path_image = home_gui, 
                                         onclick = self.btn_home_click,
                                         onclick_param = "")
 

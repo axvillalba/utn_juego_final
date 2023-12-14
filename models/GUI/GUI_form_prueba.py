@@ -9,6 +9,7 @@ from models.GUI.GUI_form import *
 from models.GUI.GUI_button_image import *
 from models.GUI.GUI_form_menu_score import *
 from auxiliar.constantes import *
+from auxiliar.auxiliar_assets import *
 
 
     
@@ -46,9 +47,9 @@ class FormPrueba(Form):
         
         porcentaje_volumen = f"{self.volumen * 100}%"
         self.label_volumen = Label(self._slave,100,150, 80, 50, porcentaje_volumen,
-                                path_font, 15,"white", "assets/graphics/interfaz/Table.png")
+                                path_font, 15,"white", table_gui)
         
-        self.btn_tabla = Button_Image(self._slave, x, y, 400,50, 50, 50, "assets/graphics/interfaz/Menu_BTN.png", 
+        self.btn_tabla = Button_Image(self._slave, x, y, 400,50, 50, 50, menu_btn, 
                                     self.btn_tabla_click, "")
         
         

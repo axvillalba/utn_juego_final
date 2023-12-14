@@ -7,6 +7,7 @@ from models.GUI.GUI_label import *
 from models.GUI.GUI_form import *
 from models.GUI.GUI_button_image import *
 from auxiliar.constantes import *
+from auxiliar.auxiliar_assets import *
 
 
 class formSonido(Form):
@@ -17,13 +18,16 @@ class formSonido(Form):
 
         self.flag_play = True
         
-        self.volumen = 0.3
+        self.volumen = 0.5
                 
         pygame.mixer.init()
-        pygame.mixer.music.load(r"assets\sounds\sounds_game\dgm-main_menu.wav")
+        
+        
+        pygame.mixer.music.load(musica_fondo)
         pygame.mixer.music.set_volume(self.volumen)
         pygame.mixer.music.play(-1)
         
+
         self.btn_play = Button(self._slave, x, y, 195, 50, 70, 40,
                             "red", "blue",self.btn_play_click, "",
                             "Pause", path_font,15, "white")
@@ -34,9 +38,9 @@ class formSonido(Form):
     
         porcentaje_volumen = f"{self.volumen * 100}%"
         self.label_volumen = Label(self._slave,315,100, 80, 50, porcentaje_volumen,
-                                path_font, 15,"white", "assets/graphics/interfaz/Table.png")
+                                path_font, 15,"white", table_gui)
         
-        self.bt_exit = Button_Image(self._slave,x,y,20,20,30,30,"assets/graphics/interfaz/close_2.png",self.btn_close, "","","Arial",1,AZUL,AZUL,"Black",-1)
+        self.bt_exit = Button_Image(self._slave,x,y,20,20,30,30,close_btn,self.btn_close, "","","Arial",1,AZUL,AZUL,"Black",-1)
         
         
         

@@ -6,6 +6,7 @@ from models.GUI.GUI_label import *
 from models.GUI.GUI_form import *
 from models.GUI.GUI_button_image import *
 from auxiliar.constantes import *
+from auxiliar.auxiliar_assets import *
 
 
 
@@ -16,28 +17,29 @@ class formSeleccionNivel(Form):
         
         
         
-        self.btn_play_stage1 = Button(self._slave, x, y, 210, 25, 30, 40,
+        
+        self.btn_play_stage1 = Button(self._slave, x, y, 210, 25, 70, 50,
                             "red", "blue",self.btn_play_click1, "",
                             path_font, path_font,15, "white")
         
-        self.btn_play_stage2 = Button(self._slave, x, y, 210, 85, 30, 40,
+        self.btn_play_stage2 = Button(self._slave, x, y, 210, 85, 70, 50,
                             "red", "blue",self.btn_play_click2, "",
                             path_font, path_font,15, "white")
         
-        self.btn_play_stage3 = Button(self._slave, x, y, 210, 145, 30, 40,
+        self.btn_play_stage3 = Button(self._slave, x, y, 210, 145, 70, 50,
                             "red", "blue",self.btn_play_click3, "",
                             path_font, path_font,15, "white")
         
-        self.label_Stage_1 = Label(self._slave,200,20, 80, 50, "Stage 1",
-                                path_font, 15,"white", "assets/graphics/interfaz/Table.png")
+        self.label_Stage_1 = Label(self._slave,200,20, 100, 60, "Stage 1",
+                                path_font, 15,"white", table_gui)
 
-        self.label_Stage_2 = Label(self._slave,200,80, 80, 50, "Stage 2",
-                                path_font, 15,"white", "assets/graphics/interfaz/Table.png")
+        self.label_Stage_2 = Label(self._slave,200,80, 100, 60, "Stage 2",
+                                path_font, 15,"white", table_gui)
         
-        self.label_Stage_3 = Label(self._slave,200,140, 80, 50, "Stage 3- Final",
-                                path_font, 15,"white", "assets/graphics/interfaz/Table.png")
+        self.label_Stage_3 = Label(self._slave,200,140, 100, 60, "Stage 3- TRYHARD",
+                                path_font, 15,"white", table_gui)
         
-        self.bt_exit = Button_Image(self._slave,x,y,20,20,30,30,"assets/graphics/interfaz/close_2.png"
+        self.bt_exit = Button_Image(self._slave,x,y,20,20,30,30,close_btn
                                     ,self.btn_close, "","","Arial",1,AZUL,AZUL,"Black",-1)
         
         
@@ -72,11 +74,12 @@ class formSeleccionNivel(Form):
 
             
     def btn_play_click2(self, param):
-        Form.set_active('stage_1')
+        Form.set_active('stage_2')
         Form.get_active()
         
     def btn_play_click3(self, param):
-        pass
+        Form.set_active('stage_3')
+        Form.get_active()
     
     def btn_close(self, param):
         Form.set_active('menu_principal')

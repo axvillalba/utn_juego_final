@@ -52,7 +52,7 @@ class Player(pygame.sprite.Sprite):
         self.porcentaje_vida = self.vida / self.__vida_maxima
         self.barra_image = pygame.Surface((self.barra_ancho * self.porcentaje_vida, self.barra_alto))
         self.barra_contraste = pygame.Surface((self.barra_ancho, self.barra_alto))
-        self.barra_rect = self.barra_image.get_rect(midbottom=(300,35))
+        self.barra_rect = self.barra_image.get_rect(midbottom=(300,45))
 
         #tiempo
         self.__update_time = pygame.time.get_ticks()
@@ -70,7 +70,7 @@ class Player(pygame.sprite.Sprite):
         self.laser_time = 0
         self.laser_cooldown = 600
         self.bullet_group = pygame.sprite.Group()
-        self.puntaje = 0
+        self._puntaje = 0
         self.is_shooting = False
         
     # Comienzo a crear todas los metodos correspondientes a Player
@@ -80,8 +80,6 @@ class Player(pygame.sprite.Sprite):
     def __set_x_animations_preset(self,animation_list: list[pygame.surface.Surface], look_r: bool):
         if self.__actual_animation != animation_list:
             self.__actual_frame_index = 0
-            
-        
         self.__actual_animation = animation_list
         self.__is_looking_right = look_r
         
@@ -180,28 +178,16 @@ class Player(pygame.sprite.Sprite):
             self.rect_ground_collition_top.bottom = 555
     
     def do_animation(self, delta_ms,lista_plataformas):
-        # deberia de agregarle un current time para evitar el exceso de superar limite de lista
         self.__player_animation_time += delta_ms
-        # current_time = pygame.time.get_ticks()
-        # if current_time - self.__update_time > self.__frame_rate:
-        #     self.__update_time = current_time
-        #     self.__actual_frame_index +=1
-
         if self.__player_animation_time >= self.__frame_rate:
             self.__player_animation_time = 0
             if self.__actual_frame_index < len(self.__actual_animation) - 1:
                 self.__actual_frame_index += 1
             else:
                 self.__actual_frame_index = 0
-                # if self.__is_jumping:     no entiendo bien esta parte del codigo
-                #     self.__is_jumping = False
-                #     self.__rect.y = 0
-                    
+            
             if self.toca_plataforma(lista_plataformas) == False:
                     self.agregar_y(self.gravity+5)        
-            # elif self.__is_jumping:     #no entiendo esta parte del codigo
-            #     self.__is_jumping = False
-            
             if self.is_alive() == False:
                 self.rect.y += 50
                 self.toca_plataforma(lista_plataformas)
@@ -232,20 +218,20 @@ class Player(pygame.sprite.Sprite):
         self.rect_ground_collition_top.y += movimiento_y
 
     def mostrar_vida(self):
-        vida_momento = self.vida
-        self.barra_rect.width = int((vida_momento / self.__vida_maxima) * self.barra_ancho)
+        vida_global = self.vida
+        self.barra_rect.width = int((vida_global / self.__vida_maxima) * self.barra_ancho)
         self.barra_contraste.fill(ROJO)
         
-        if vida_momento > self.__vida_maxima / 2:
+        if vida_global > self.__vida_maxima / 2:
             self.barra_image.fill(VERDE)
-        elif vida_momento > self.__vida_maxima / 4:
+        elif vida_global > self.__vida_maxima / 4:
             self.barra_image.fill(AMARILLO)
         else:
             self.barra_image.fill(ROJO)
             
     def is_alive(self):
-        vida_mometo = self.vida
-        if vida_mometo <= 0 :
+        vida_global = self.vida
+        if vida_global <= 0 :
             self.__player_vivo == False
             self.__set_x_animations_preset(self.__loose_r,True)
             return False

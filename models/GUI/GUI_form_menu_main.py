@@ -6,7 +6,7 @@ from models.GUI.GUI_label import *
 from models.GUI.GUI_form import *
 from models.GUI.GUI_button_image import *
 from auxiliar.constantes import *
-
+from auxiliar.auxiliar_assets import *
 
 
 class formMainMenu(Form):
@@ -14,9 +14,7 @@ class formMainMenu(Form):
     def __init__(self, name,screen: pygame.Surface, x: int, y: int, w:int, h: int, color_background, color_border = "Black", border_size: int = -1, active = True):
         super().__init__(screen,name, x,y,w,h,color_background, color_border, border_size, active)
         
-        self.flag_play = True
-        self.stage = None
-        
+
         self.btn_play_start = Button(self._slave, x, y, 210, 25, 100, 40,
                             "red", "blue",self.btn_play_click1, "",
                             path_font, path_font,20, "white")
@@ -30,13 +28,13 @@ class formMainMenu(Form):
                             path_font, path_font,20, "white")
         
         self.label_Stage_1 = Label(self._slave,200,20, 130, 50, "Empezar",
-                                path_font,20,"white", "assets/graphics/interfaz/Table.png")
+                                path_font,20,"white", table_gui)
 
         self.label_Stage_2 = Label(self._slave,200,80, 130, 50, "Configuracion",
-                                path_font, 20,"white", "assets/graphics/interfaz/Table.png")
+                                path_font, 20,"white", table_gui)
         
         self.label_Stage_3 = Label(self._slave,200,140, 130, 50, "Seleccion nivel",
-                                path_font, 20,"white", "assets/graphics/interfaz/Table.png")
+                                path_font, 20,"white", table_gui)
         
         
         
@@ -59,19 +57,13 @@ class formMainMenu(Form):
                 self.draw()
                 self.render()
                 for widget in self.lista_widgets:
-                    widget.update(lista_eventos)#POLIMORFISMO
+                    widget.update(lista_eventos) #POLIMORFISMO
         else:
             self.hijo.update(lista_eventos)
             
-        self.elegir_stage()
-        
-            
-    def elegir_stage(self):
-        return self.stage
-            
             
     def btn_play_click1(self, param):
-        Form.set_active('stage_1')   
+        Form.set_active('screen_intro')   
         Form.get_active()
         
                     
